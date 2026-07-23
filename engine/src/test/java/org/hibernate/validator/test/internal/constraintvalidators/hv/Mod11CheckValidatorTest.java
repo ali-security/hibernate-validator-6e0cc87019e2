@@ -15,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Random;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
@@ -32,6 +33,9 @@ import org.hibernate.validator.testutil.TestForIssue;
 import org.hibernate.validator.testutils.Mod11TestUtil;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 /**
  * Tests for the {@code Mod11CheckValidator}.
@@ -156,8 +160,9 @@ public class Mod11CheckValidatorTest {
 		assertTrue( validator.isValid( "123-456-789-X", null ) );
 	}
 
-	@Test
-	public void testValidMod11() throws Exception {
+	@ParameterizedTest
+	@MethodSource("testValidMod11Data")
+	public void testValidMod11(String value) throws Exception {
 		Mod11CheckValidator validator = new Mod11CheckValidator();
 		Mod11Check modCheck = createMod11CheckAnnotation(
 				0,
@@ -170,13 +175,20 @@ public class Mod11CheckValidatorTest {
 		);
 		validator.initialize( modCheck );
 
-		assertTrue( validator.isValid( "23322023583", null ) );
-		assertTrue( validator.isValid( "378.796.950-01", null ) );
-		assertTrue( validator.isValid( "331.814.296-43", null ) );
+		assertTrue( validator.isValid( value, null ) );
 	}
 
-	@Test
-	public void testInvalidMod11() throws Exception {
+	private static Stream<Arguments> testValidMod11Data() {
+		return Stream.of(
+				Arguments.of( "23322023583" ),
+				Arguments.of( "378.796.950-01" ),
+				Arguments.of( "331.814.296-43" )
+		);
+	}
+
+	@ParameterizedTest
+	@MethodSource("testInvalidMod11Data")
+	public void testInvalidMod11(String value) throws Exception {
 		Mod11CheckValidator validator = new Mod11CheckValidator();
 		Mod11Check modCheck = createMod11CheckAnnotation(
 				0,
@@ -189,9 +201,15 @@ public class Mod11CheckValidatorTest {
 		);
 		validator.initialize( modCheck );
 
-		assertFalse( validator.isValid( "23322023584", null ) );
-		assertFalse( validator.isValid( "378.796.950-02", null ) );
-		assertFalse( validator.isValid( "331.814.296-52", null ) );
+		assertFalse( validator.isValid( value, null ) );
+	}
+
+	private static Stream<Arguments> testInvalidMod11Data() {
+		return Stream.of(
+				Arguments.of( "23322023584" ),
+				Arguments.of( "378.796.950-02" ),
+				Arguments.of( "331.814.296-52" )
+		);
 	}
 
 	@Test
