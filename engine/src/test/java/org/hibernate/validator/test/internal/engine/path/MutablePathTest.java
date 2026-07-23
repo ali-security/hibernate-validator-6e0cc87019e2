@@ -16,6 +16,11 @@ import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertNull;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.expectThrows;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.lang.reflect.Method;
 import java.util.Collections;
@@ -51,6 +56,7 @@ import org.hibernate.validator.testutils.ValidatorUtil;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Hardy Ferentschik
@@ -93,29 +99,29 @@ public class MutablePathTest {
 
 		assertTrue( propIter.hasNext() );
 		Path.Node elem = propIter.next();
-		assertEquals( elem.getName(), "orders" );
+		assertEquals( "orders", elem.getName() );
 		assertFalse( elem.isInIterable() );
 
 		assertTrue( propIter.hasNext() );
 		elem = propIter.next();
-		assertEquals( elem.getName(), "deliveryAddress" );
+		assertEquals( "deliveryAddress", elem.getName() );
 		assertTrue( elem.isInIterable() );
-		assertEquals( elem.getIndex(), Integer.valueOf( 3 ) );
+		assertEquals( Integer.valueOf( 3 ), elem.getIndex() );
 
 		assertTrue( propIter.hasNext() );
 		elem = propIter.next();
-		assertEquals( elem.getName(), "addressline" );
+		assertEquals( "addressline", elem.getName() );
 		assertFalse( elem.isInIterable() );
 
 		assertTrue( propIter.hasNext() );
 		elem = propIter.next();
 		assertNull( elem.getName() );
 		assertTrue( elem.isInIterable() );
-		assertEquals( elem.getIndex(), Integer.valueOf( 1 ) );
+		assertEquals( Integer.valueOf( 1 ), elem.getIndex() );
 
 		assertFalse( propIter.hasNext() );
 
-		assertEquals( path.toString(), property );
+		assertEquals( property, path.toString() );
 	}
 
 	@Test
@@ -123,7 +129,7 @@ public class MutablePathTest {
 		MutablePath path = MutablePath.createPathFromString( "€Amount" );
 		Iterator<Path.Node> it = path.iterator();
 
-		assertEquals( it.next().getName(), "€Amount" );
+		assertEquals( "€Amount", it.next().getName() );
 	}
 
 	@Test
@@ -131,7 +137,7 @@ public class MutablePathTest {
 		MutablePath path = MutablePath.createPathFromString( "höchstBetrag" );
 		Iterator<Path.Node> it = path.iterator();
 
-		assertEquals( it.next().getName(), "höchstBetrag" );
+		assertEquals( "höchstBetrag", it.next().getName() );
 	}
 
 	@Test
@@ -139,7 +145,7 @@ public class MutablePathTest {
 		MutablePath path = MutablePath.createPathFromString( "höchst\u00f6Betrag" );
 		Iterator<Path.Node> it = path.iterator();
 
-		assertEquals( it.next().getName(), "höchst\u00f6Betrag" );
+		assertEquals( "höchst\u00f6Betrag", it.next().getName() );
 	}
 
 	@Test
@@ -156,14 +162,14 @@ public class MutablePathTest {
 
 		assertTrue( propIter.hasNext() );
 		Path.Node elem = propIter.next();
-		assertEquals( elem.getName(), "order" );
+		assertEquals( "order", elem.getName() );
 		assertFalse( elem.isInIterable() );
 
 		assertTrue( propIter.hasNext() );
 		elem = propIter.next();
-		assertEquals( elem.getName(), "deliveryAddress" );
+		assertEquals( "deliveryAddress", elem.getName() );
 		assertTrue( elem.isInIterable() );
-		assertEquals( elem.getKey(), "foo" );
+		assertEquals( "foo", elem.getKey() );
 
 		assertFalse( propIter.hasNext() );
 	}
@@ -266,7 +272,7 @@ public class MutablePathTest {
 		Path.Node node = iter.next();
 		assertNotNull( node );
 		assertTrue( node.isInIterable() );
-		assertEquals( node.getKey(), id );
+		assertEquals( id, node.getKey() );
 	}
 
 	@Test
@@ -290,7 +296,7 @@ public class MutablePathTest {
 
 		MutablePath methodParameterPath = MutablePath.createPathForExecutable( executableMetaData );
 
-		assertEquals( methodParameterPath.toString(), "addItem" );
+		assertEquals( "addItem", methodParameterPath.toString() );
 	}
 
 	@Test

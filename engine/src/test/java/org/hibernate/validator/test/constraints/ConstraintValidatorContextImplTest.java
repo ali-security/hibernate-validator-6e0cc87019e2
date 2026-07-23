@@ -11,6 +11,8 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertSame;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.expectThrows;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.util.List;
 import java.util.Map;
@@ -25,7 +27,7 @@ import org.hibernate.validator.messageinterpolation.ExpressionLanguageFeatureLev
 import org.hibernate.validator.messageinterpolation.MessageParameterEscaping;
 import org.hibernate.validator.testutil.ConstraintViolationAssert.PathExpectation;
 
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for the {@link ConstraintValidatorContextImpl}.
@@ -165,7 +167,7 @@ public class ConstraintValidatorContextImplTest {
 				.addConstraintViolation();
 
 		List<ConstraintViolationCreationContext> constraintViolationCreationContextList = context.getConstraintViolationCreationContexts();
-		assertTrue( constraintViolationCreationContextList.size() == 2 );
+		assertEquals( 2, constraintViolationCreationContextList.size() );
 		assertMessageAndPath( constraintViolationCreationContextList.get( 0 ), message1, pathWith()
 				.property( "foo" )
 				.property( "bar", true, "key", null ) );
@@ -184,10 +186,10 @@ public class ConstraintValidatorContextImplTest {
 		ConstraintValidatorContext context = createEmptyHibernateConstraintValidatorReusableContext();
 
 		ConstraintValidatorContext asConstraintValidatorContext = context.unwrap( ConstraintValidatorContext.class );
-		assertSame( asConstraintValidatorContext, context );
+		assertSame( context, asConstraintValidatorContext );
 
 		java.lang.Object asObject = context.unwrap( java.lang.Object.class );
-		assertSame( asObject, context );
+		assertSame( context, asObject );
 	}
 
 	@Test
@@ -270,6 +272,6 @@ public class ConstraintValidatorContextImplTest {
 
 	private void assertMessageAndPath(ConstraintViolationCreationContext constraintViolationCreationContext, String expectedMessage, PathExpectation expectedPath) {
 		assertPathEquals( constraintViolationCreationContext.getPath(), expectedPath );
-		assertEquals( constraintViolationCreationContext.getMessage(), expectedMessage, "Wrong message" );
+		assertEquals( expectedMessage, constraintViolationCreationContext.getMessage(), "Wrong message" );
 	}
 }

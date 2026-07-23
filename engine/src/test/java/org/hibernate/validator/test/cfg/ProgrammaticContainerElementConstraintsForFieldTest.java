@@ -37,8 +37,8 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.internal.util.CollectionHelper;
 import org.hibernate.validator.testutil.TestForIssue;
 
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Gunnar Morling
@@ -47,7 +47,7 @@ public class ProgrammaticContainerElementConstraintsForFieldTest {
 
 	private HibernateValidatorConfiguration config;
 
-	@BeforeMethod
+	@BeforeEach
 	public void setUp() {
 		config = getConfiguration( HibernateValidator.class );
 	}

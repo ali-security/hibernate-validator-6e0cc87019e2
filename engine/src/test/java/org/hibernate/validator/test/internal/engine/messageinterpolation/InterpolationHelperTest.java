@@ -13,6 +13,7 @@ import static org.hibernate.validator.internal.engine.messageinterpolation.util.
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
 public class InterpolationHelperTest {
 

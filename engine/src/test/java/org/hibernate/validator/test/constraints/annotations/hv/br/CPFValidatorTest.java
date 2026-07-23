@@ -23,6 +23,7 @@ import org.hibernate.validator.testutils.Mod11TestUtil;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
 public class CPFValidatorTest extends AbstractConstrainedTest {
 	private String[] invalidCPFs = {

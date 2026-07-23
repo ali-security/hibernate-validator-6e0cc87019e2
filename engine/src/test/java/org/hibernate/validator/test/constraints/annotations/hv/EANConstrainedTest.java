@@ -22,6 +22,7 @@ import org.hibernate.validator.testutils.Mod10TestUtil;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Marko Bekhta

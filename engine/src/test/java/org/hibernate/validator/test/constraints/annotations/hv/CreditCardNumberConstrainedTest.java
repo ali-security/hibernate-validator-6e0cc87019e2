@@ -27,6 +27,7 @@ import org.hibernate.validator.testutils.LuhnTestUtil.RepeatedDigits;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Marko Bekhta

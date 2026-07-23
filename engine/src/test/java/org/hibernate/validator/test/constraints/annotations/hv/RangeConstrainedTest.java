@@ -50,6 +50,8 @@ import org.assertj.core.api.Assertions;
 import org.javamoney.moneta.Money;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
+
 
 /**
  * @author Marko Bekhta

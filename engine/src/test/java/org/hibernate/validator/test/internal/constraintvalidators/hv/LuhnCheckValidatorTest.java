@@ -6,8 +6,8 @@ package org.hibernate.validator.test.internal.constraintvalidators.hv;
 
 import static org.testng.Assert.assertEquals;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Random;
 
@@ -20,6 +20,7 @@ import org.hibernate.validator.testutils.LuhnTestUtil.RepeatedDigits;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for the {@code LuhnCheckValidator}.
