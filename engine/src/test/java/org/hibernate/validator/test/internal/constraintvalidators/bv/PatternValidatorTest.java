@@ -4,6 +4,7 @@
  */
 package org.hibernate.validator.test.internal.constraintvalidators.bv;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.hibernate.validator.testutils.ConstraintValidatorInitializationHelper.initialize;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;

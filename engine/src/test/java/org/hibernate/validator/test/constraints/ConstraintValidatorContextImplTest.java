@@ -172,10 +172,11 @@ public class ConstraintValidatorContextImplTest {
 		assertMessageAndPath( constraintViolationCreationContextList.get( 1 ), message2, pathWith().bean() );
 	}
 
-	@Test(expectedExceptions = ValidationException.class)
+	@Test
 	public void testUnwrapToImplementationCausesValidationException() {
 		ConstraintValidatorContext context = createEmptyHibernateConstraintValidatorReusableContext();
-		context.unwrap( ConstraintValidatorContextImpl.class );
+		assertThatThrownBy( () -> context.unwrap( ConstraintValidatorContextImpl.class ) )
+				.isInstanceOf( ValidationException.class );
 	}
 
 	@Test

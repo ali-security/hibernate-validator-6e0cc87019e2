@@ -4,6 +4,7 @@
  */
 package org.hibernate.validator.test.internal.engine.path;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.hibernate.validator.testutil.ConstraintViolationAssert.assertThat;
 import static org.hibernate.validator.testutil.ConstraintViolationAssert.pathWith;
 import static org.hibernate.validator.testutil.ConstraintViolationAssert.violationOf;
@@ -141,9 +142,10 @@ public class MutablePathTest {
 		assertEquals( it.next().getName(), "höchst\u00f6Betrag" );
 	}
 
-	@Test(expectedExceptions = IllegalArgumentException.class)
+	@Test
 	public void testParsingInvalidJavaProperty() {
-		MutablePath.createPathFromString( "1invalid" );
+		assertThatThrownBy( () -> MutablePath.createPathFromString( "1invalid" ) )
+				.isInstanceOf( IllegalArgumentException.class );
 	}
 
 	@Test
@@ -166,29 +168,34 @@ public class MutablePathTest {
 		assertFalse( propIter.hasNext() );
 	}
 
-	@Test(expectedExceptions = IllegalArgumentException.class)
+	@Test
 	public void testNull() {
-		MutablePath.createPathFromString( null );
+		assertThatThrownBy( () -> MutablePath.createPathFromString( null ) )
+				.isInstanceOf( IllegalArgumentException.class );
 	}
 
-	@Test(expectedExceptions = IllegalArgumentException.class)
+	@Test
 	public void testUnbalancedBraces() {
-		MutablePath.createPathFromString( "foo[.bar" );
+		assertThatThrownBy( () -> MutablePath.createPathFromString( "foo[.bar" ) )
+				.isInstanceOf( IllegalArgumentException.class );
 	}
 
-	@Test(expectedExceptions = IllegalArgumentException.class)
+	@Test
 	public void testIndexInMiddleOfProperty() {
-		MutablePath.createPathFromString( "f[1]oo.bar" );
+		assertThatThrownBy( () -> MutablePath.createPathFromString( "f[1]oo.bar" ) )
+				.isInstanceOf( IllegalArgumentException.class );
 	}
 
-	@Test(expectedExceptions = IllegalArgumentException.class)
+	@Test
 	public void testTrailingPathSeparator() {
-		MutablePath.createPathFromString( "foo.bar." );
+		assertThatThrownBy( () -> MutablePath.createPathFromString( "foo.bar." ) )
+				.isInstanceOf( IllegalArgumentException.class );
 	}
 
-	@Test(expectedExceptions = IllegalArgumentException.class)
+	@Test
 	public void testLeadingPathSeparator() {
-		MutablePath.createPathFromString( ".foo.bar" );
+		assertThatThrownBy( () -> MutablePath.createPathFromString( ".foo.bar" ) )
+				.isInstanceOf( IllegalArgumentException.class );
 	}
 
 	@Test
@@ -286,9 +293,10 @@ public class MutablePathTest {
 		assertEquals( methodParameterPath.toString(), "addItem" );
 	}
 
-	@Test(expectedExceptions = IllegalArgumentException.class)
+	@Test
 	public void testCreationOfExecutablePathFailsDueToMissingExecutable() {
-		MutablePath.createPathForExecutable( null );
+		assertThatThrownBy( () -> MutablePath.createPathForExecutable( null ) )
+				.isInstanceOf( IllegalArgumentException.class );
 	}
 
 	class Container {
