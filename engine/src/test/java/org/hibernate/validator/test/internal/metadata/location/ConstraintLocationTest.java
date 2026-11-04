@@ -5,7 +5,6 @@
 package org.hibernate.validator.test.internal.metadata.location;
 
 import static org.hibernate.validator.testutils.ValidatorUtil.getAccessorFactory;
-import static org.testng.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.lang.reflect.Method;

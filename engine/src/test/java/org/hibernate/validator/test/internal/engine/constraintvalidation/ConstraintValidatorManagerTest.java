@@ -5,8 +5,8 @@
 package org.hibernate.validator.test.internal.engine.constraintvalidation;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.hibernate.validator.testutils.ConstraintValidatorInitializationHelper.getConstraintValidatorInitializationContext;
 import static org.hibernate.validator.testutils.ConstraintValidatorInitializationHelper.getDummyConstraintValidatorInitializationContext;
 import static org.hibernate.validator.testutils.ValidatorUtil.getConfiguration;

@@ -8,8 +8,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.hibernate.validator.internal.util.CollectionHelper.newHashSet;
 import static org.hibernate.validator.testutils.ConstraintValidatorInitializationHelper.getDummyConstraintCreationContext;
 import static org.hibernate.validator.testutils.ValidatorUtil.getAccessorFactory;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 

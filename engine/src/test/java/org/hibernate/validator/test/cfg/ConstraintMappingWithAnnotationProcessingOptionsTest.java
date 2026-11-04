@@ -43,11 +43,10 @@ import org.hibernate.validator.cfg.defs.NullDef;
 import org.hibernate.validator.test.constraints.Object;
 import org.hibernate.validator.testutils.ValidatorUtil;
 
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 /**
  * Unit test for {@link org.hibernate.validator.cfg.ConstraintMapping} et al.
@@ -81,8 +80,7 @@ public class ConstraintMappingWithAnnotationProcessingOptionsTest {
 		assertEquals( 0, validator.getConstraintsForClass( Doer.class ).getConstrainedMethods( MethodType.NON_GETTER ).size() );
 	}
 
-	@DataProvider
-	public String[][] xmlIgnoreAnnotations() {
+	public static String[][] xmlIgnoreAnnotations() {
 		return new String[][] { { "" }, { "ignore-annotations=\"true\"" } };
 	}
 
@@ -92,7 +90,8 @@ public class ConstraintMappingWithAnnotationProcessingOptionsTest {
 	 * questionable - the programmatic mapping never asked for it - but it is the long-standing behavior, so it is
 	 * pinned down here until it is revisited on its own.
 	 */
-	@Test(dataProvider = "xmlIgnoreAnnotations")
+	@ParameterizedTest
+	@MethodSource("xmlIgnoreAnnotations")
 	public void testProgrammaticMappingOverridesXmlIgnoreAnnotations(String ignoreAnnotationsAttribute) {
 		String xml = """
 				<constraint-mappings xmlns="https://jakarta.ee/xml/ns/validation/mapping" version="3.1">

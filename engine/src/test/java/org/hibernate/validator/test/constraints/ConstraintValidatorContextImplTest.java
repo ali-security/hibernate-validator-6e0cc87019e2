@@ -7,12 +7,9 @@ package org.hibernate.validator.test.constraints;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.hibernate.validator.testutil.ConstraintViolationAssert.assertPathEquals;
 import static org.hibernate.validator.testutil.ConstraintViolationAssert.pathWith;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertSame;
-import static org.testng.Assert.assertTrue;
-import static org.testng.Assert.expectThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
 import java.util.Map;
@@ -231,11 +228,11 @@ public class ConstraintValidatorContextImplTest {
 	@Test
 	public void testCustomizingFirstNodeIsRejected() {
 		ConstraintValidatorContextImpl context = createEmptyHibernateConstraintValidatorReusableContext();
-		expectThrows( IllegalStateException.class, () -> context.buildConstraintViolationWithTemplate( message )
+		assertThrows( IllegalStateException.class, () -> context.buildConstraintViolationWithTemplate( message )
 				.addPropertyNode( "jobs" ).inIterable() );
-		expectThrows( IllegalStateException.class, () -> context.buildConstraintViolationWithTemplate( message )
+		assertThrows( IllegalStateException.class, () -> context.buildConstraintViolationWithTemplate( message )
 				.addPropertyNode( "jobs" ).inContainer( List.class, 0 ) );
-		expectThrows( IllegalStateException.class, () -> context.buildConstraintViolationWithTemplate( message )
+		assertThrows( IllegalStateException.class, () -> context.buildConstraintViolationWithTemplate( message )
 				.addContainerElementNode( "<list element>", List.class, 0 ).addConstraintViolation() );
 	}
 

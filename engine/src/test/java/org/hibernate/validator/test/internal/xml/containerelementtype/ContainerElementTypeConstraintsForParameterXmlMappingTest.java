@@ -123,7 +123,6 @@ public class ContainerElementTypeConstraintsForParameterXmlMappingTest {
 
 	// HV-1428 Container element support is disabled for arrays
 	@Test
-	//@Test(expectedExceptions = UnexpectedTypeException.class, expectedExceptionsMessageRegExp = "HV000030:.*")
 	@TestForIssue(jiraKey = "HV-1279")
 	public void configuringConstraintsOnGenericTypeArgumentOfArrayThrowsException() {
 		assertThatThrownBy( () -> {

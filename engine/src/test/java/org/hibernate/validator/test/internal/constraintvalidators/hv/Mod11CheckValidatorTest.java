@@ -7,9 +7,7 @@ package org.hibernate.validator.test.internal.constraintvalidators.hv;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.hibernate.validator.testutil.ConstraintViolationAssert.assertNoViolations;
 import static org.hibernate.validator.testutils.ValidatorUtil.getConfiguration;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -330,8 +328,8 @@ public class Mod11CheckValidatorTest {
 						Mod11CheckValidator validator = new Mod11CheckValidator();
 						validator.initialize( 0, Integer.MAX_VALUE, -1, ignore, threshold, 'X', 'Z', direction, weights );
 						for ( CharSequence value : new CharSequence[] { null, "", "0Z", "6X", "19", "1٩", "٠Z", " -0", "123456Z" } ) {
-							assertEquals( validator.isValid( value, null ), Mod11TestUtil.isValidLegacy(
-									value, 0, Integer.MAX_VALUE, -1, ignore, threshold, 'X', 'Z', direction == ProcessingDirection.LEFT_TO_RIGHT, weights ) );
+							assertEquals( Mod11TestUtil.isValidLegacy(
+									value, 0, Integer.MAX_VALUE, -1, ignore, threshold, 'X', 'Z', direction == ProcessingDirection.LEFT_TO_RIGHT, weights ), validator.isValid( value, null ) );
 						}
 						for ( int sample = 0; sample < 20; sample++ ) {
 							StringBuilder value = new StringBuilder();
@@ -341,8 +339,8 @@ public class Mod11CheckValidatorTest {
 										? (char) ( '0' + random.nextInt( 10 ) )
 										: characters.charAt( random.nextInt( characters.length() ) ) );
 							}
-							assertEquals( validator.isValid( value, null ), Mod11TestUtil.isValidLegacy(
-									value, 0, Integer.MAX_VALUE, -1, ignore, threshold, 'X', 'Z', direction == ProcessingDirection.LEFT_TO_RIGHT, weights ),
+							assertEquals( Mod11TestUtil.isValidLegacy(
+									value, 0, Integer.MAX_VALUE, -1, ignore, threshold, 'X', 'Z', direction == ProcessingDirection.LEFT_TO_RIGHT, weights ), validator.isValid( value, null ),
 									value.toString() );
 						}
 					}

@@ -4,9 +4,9 @@
  */
 package org.hibernate.validator.test.internal.constraintvalidators.hv;
 
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
-import static org.testng.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import org.hibernate.validator.constraints.Hexadecimal;
 import org.hibernate.validator.constraints.Hexadecimal.HexStrictness;
@@ -15,8 +15,8 @@ import org.hibernate.validator.internal.constraintvalidators.hv.HexadecimalValid
 import org.hibernate.validator.internal.util.annotation.ConstraintAnnotationDescriptor;
 import org.hibernate.validator.testutil.TestForIssue;
 
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests the {@link Hexadecimal} constraint.
@@ -29,7 +29,7 @@ public class HexadecimalValidatorTest {
 	private ConstraintAnnotationDescriptor.Builder<Hexadecimal> descriptorBuilder;
 	private Hexadecimal annotation;
 
-	@BeforeMethod
+	@BeforeEach
 	public void setUp() {
 		descriptorBuilder = new ConstraintAnnotationDescriptor.Builder<>( Hexadecimal.class );
 		validator = new HexadecimalValidator();

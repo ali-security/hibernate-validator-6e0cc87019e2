@@ -6,11 +6,10 @@ package org.hibernate.validator.test.internal.engine;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.hibernate.validator.testutil.ConstraintViolationAssert.violationOf;
-import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.assertSame;
-import static org.testng.Assert.assertTrue;
-import static org.testng.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -119,11 +118,11 @@ public class ValidatorFactoryNoELBootstrapTest {
 					.configure()
 					.externalClassLoader( externalClassLoader )
 					.buildValidatorFactory() ) {
-				assertSame( GetClassLoader.fromContext(), originalClassLoader );
+				assertSame( originalClassLoader, GetClassLoader.fromContext() );
 				ConstraintViolationAssert.assertThat( factory.getValidator().validate( new SomeBean() ) )
 						.containsOnlyViolations( violationOf( Min.class ).withMessage( "must be greater than or equal to 42" ) );
 			}
-			assertSame( GetClassLoader.fromContext(), originalClassLoader );
+			assertSame( originalClassLoader, GetClassLoader.fromContext() );
 		}
 	}
 
@@ -151,7 +150,7 @@ public class ValidatorFactoryNoELBootstrapTest {
 			}
 			catch (ValidationException e) {
 				assertTrue( e.getMessage().startsWith( "HV000183" ) );
-				assertSame( GetClassLoader.fromContext(), originalClassLoader );
+				assertSame( originalClassLoader, GetClassLoader.fromContext() );
 			}
 		}
 	}

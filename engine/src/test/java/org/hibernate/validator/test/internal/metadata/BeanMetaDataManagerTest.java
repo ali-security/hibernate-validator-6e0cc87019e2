@@ -8,9 +8,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static org.hibernate.validator.testutils.ConstraintValidatorInitializationHelper.getDummyConstraintCreationContext;
 import static org.hibernate.validator.testutils.ValidatorUtil.getAccessorFactory;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertNotSame;
-import static org.testng.Assert.assertTrue;
 
 import java.io.DataInputStream;
 import java.io.File;

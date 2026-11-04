@@ -10,16 +10,11 @@ import static org.hibernate.validator.testutil.ConstraintViolationAssert.pathWit
 import static org.hibernate.validator.testutil.ConstraintViolationAssert.violationOf;
 import static org.hibernate.validator.testutils.ConstraintValidatorInitializationHelper.getDummyConstraintCreationContext;
 import static org.hibernate.validator.testutils.ValidatorUtil.getAccessorFactory;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.assertNull;
-import static org.testng.Assert.assertTrue;
-import static org.testng.Assert.expectThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.lang.reflect.Method;
@@ -54,9 +49,9 @@ import org.hibernate.validator.internal.util.ExecutableParameterNameProvider;
 import org.hibernate.validator.internal.util.TypeResolutionHelper;
 import org.hibernate.validator.testutils.ValidatorUtil;
 
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 /**
  * @author Hardy Ferentschik
@@ -66,8 +61,7 @@ import org.junit.jupiter.api.Test;
 @SuppressWarnings("removal")
 public class MutablePathTest {
 
-	@DataProvider
-	public Object[][] rootNodeMutations() {
+	public static Object[][] rootNodeMutations() {
 		return new Object[][] {
 				{ (Consumer<MutablePath>) MutablePath::makeLeafNodeIterable },
 				{ (Consumer<MutablePath>) path -> path.makeLeafNodeIterableAndSetIndex( 3 ) },
@@ -76,10 +70,11 @@ public class MutablePathTest {
 		};
 	}
 
-	@Test(dataProvider = "rootNodeMutations")
+	@ParameterizedTest
+	@MethodSource("rootNodeMutations")
 	public void testRootNodeMutationIsRejected(Consumer<MutablePath> mutation) {
 		MutablePath path = MutablePath.createRootPath();
-		IllegalStateException exception = expectThrows( IllegalStateException.class, () -> mutation.accept( path ) );
+		IllegalStateException exception = assertThrows( IllegalStateException.class, () -> mutation.accept( path ) );
 		assertTrue( exception.getMessage().startsWith( "HV000290:" ) );
 
 		MutablePath otherPath = MutablePath.createRootPath();

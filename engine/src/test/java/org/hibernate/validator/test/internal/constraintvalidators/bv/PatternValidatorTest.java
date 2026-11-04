@@ -4,17 +4,13 @@
  */
 package org.hibernate.validator.test.internal.constraintvalidators.bv;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.hibernate.validator.testutils.ConstraintValidatorInitializationHelper.initialize;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
-import static org.testng.Assert.expectThrows;
-
-import java.util.regex.PatternSyntaxException;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.regex.PatternSyntaxException;
 import java.util.stream.Stream;
 
 import jakarta.validation.constraints.Pattern;
@@ -140,10 +136,10 @@ public class PatternValidatorTest {
 		ConstraintAnnotationDescriptor<Pattern> descriptor = descriptorBuilder.build();
 
 		PatternValidator constraint = new PatternValidator();
-		IllegalArgumentException exception = expectThrows( IllegalArgumentException.class, () -> initialize( constraint, descriptor ) );
+		IllegalArgumentException exception = assertThrows( IllegalArgumentException.class, () -> initialize( constraint, descriptor ) );
 		assertTrue( exception.getMessage().startsWith( "HV000022:" ) );
 		assertTrue( exception.getCause() instanceof PatternSyntaxException );
-		assertEquals( ( (PatternSyntaxException) exception.getCause() ).getPattern(), "(unbalanced parentheses" );
+		assertEquals( "(unbalanced parentheses", ( (PatternSyntaxException) exception.getCause() ).getPattern() );
 	}
 
 	@Test
