@@ -103,6 +103,68 @@ public class SafeHtmlValidatorTest {
 	}
 
 	@Test
+	public void testInvalidUnterminatedImgTagWithScriptIncluded() {
+		descriptorBuilder.setAttribute( "whitelistType", WhiteListType.BASIC );
+
+		// the tag end ('>') is omitted, browsers complete the tag with the content following the value in the page
+		assertFalse( getSafeHtmlValidator().isValid( "<img src=asdf onerror=\"alert(1)\"", null ) );
+	}
+
+	@Test
+	public void testInvalidUnterminatedImgTagWithScriptIncludedInAnyAttributeState() {
+		descriptorBuilder.setAttribute( "whitelistType", WhiteListType.BASIC );
+
+		SafeHtmlValidator validator = getSafeHtmlValidator();
+		// unterminated quoted attribute values
+		assertFalse( validator.isValid( "<img src=asdf onerror=\"alert(1)", null ) );
+		assertFalse( validator.isValid( "<img src=asdf onerror='alert(1)", null ) );
+		// unterminated unquoted attribute value
+		assertFalse( validator.isValid( "<img src=asdf onerror=alert(1)//", null ) );
+		// unterminated after an attribute value
+		assertFalse( validator.isValid( "<img src=asdf onerror=\"alert(1)\" ", null ) );
+		assertFalse( validator.isValid( "<img src=asdf onerror=\"alert(1)\"/", null ) );
+		// unterminated attribute name
+		assertFalse( validator.isValid( "<img src=asdf onerror=\"alert(1)\" x", null ) );
+		assertFalse( validator.isValid( "<img src=asdf onerror=\"alert(1)\" x ", null ) );
+	}
+
+	@Test
+	public void testInvalidUnterminatedTagAfterValidContent() {
+		descriptorBuilder.setAttribute( "whitelistType", WhiteListType.BASIC );
+
+		assertFalse( getSafeHtmlValidator().isValid( "<p><a href='http://example.com/'>Link</a></p><img src=asdf onerror=alert(1)//", null ) );
+	}
+
+	@Test
+	public void testInvalidUnterminatedScriptTagIncluded() {
+		descriptorBuilder.setAttribute( "whitelistType", WhiteListType.BASIC );
+
+		assertFalse( getSafeHtmlValidator().isValid( "Hello<script", null ) );
+	}
+
+	@Test
+	public void testInvalidUnterminatedTagAfterManySelfClosingTags() {
+		descriptorBuilder.setAttribute( "whitelistType", WhiteListType.BASIC );
+
+		// each self-closing tag directly following some text causes a (harmless) parse error to be reported;
+		// these must not hide the error caused by the unterminated tag at the end
+		StringBuilder value = new StringBuilder();
+		for ( int i = 0; i < 20_000; i++ ) {
+			value.append( "line<br/>" );
+		}
+		value.append( "<img src=asdf onerror=alert(1)//" );
+
+		assertFalse( getSafeHtmlValidator().isValid( value, null ) );
+	}
+
+	@Test
+	public void testValidSelfClosingTagsAfterText() {
+		descriptorBuilder.setAttribute( "whitelistType", WhiteListType.BASIC );
+
+		assertTrue( getSafeHtmlValidator().isValid( "Hello<br/>World<br/><p>Hello<br/>World</p>", null ) );
+	}
+
+	@Test
 	public void testValid() throws Exception {
 		descriptorBuilder.setAttribute( "whitelistType", WhiteListType.BASIC );
 

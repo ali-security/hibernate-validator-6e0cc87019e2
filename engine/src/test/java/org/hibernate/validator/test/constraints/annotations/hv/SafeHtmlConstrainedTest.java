@@ -40,6 +40,15 @@ public class SafeHtmlConstrainedTest extends AbstractConstrainedTest {
 		);
 	}
 
+	@Test
+	public void testSafeHtmlUnterminatedTagInvalid() {
+		Foo foo = new Foo( "<div>content</div><img src=asdf onerror=\"alert(1)\"" );
+		Set<ConstraintViolation<Foo>> violations = validator.validate( foo );
+		assertThat( violations ).containsOnlyViolations(
+				violationOf( SafeHtml.class )
+		);
+	}
+
 	private static class Foo {
 
 		@SafeHtml
